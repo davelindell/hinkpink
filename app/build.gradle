@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.lindell.app.hinkpink"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.google.android.gms:play-services:7.3.0'
+    compile 'com.googlecode.objectify:objectify:5.0.3'
+    compile 'commons-io:commons-io:2.0.1'
+    compile 'com.thoughtworks.xstream:xstream:1.4.7'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    configurations { all*.exclude module: 'xmlpull' }
+    compile project(':backend')
+}
+

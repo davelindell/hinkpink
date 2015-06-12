@@ -15,7 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-
+-verbose
 -dontwarn javax.xml.stream.events.**
 -dontwarn android.**
 -dontwarn org.apache.**

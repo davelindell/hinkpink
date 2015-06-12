@@ -112,18 +112,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="play-services-wallet-7.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-drive-7.3.0" level="project" />
-    <orderEntry type="library" exported="" name="play-services-games-7.3.0" level="project" />
-    <orderEntry type="library" exported="" name="appengine-endpoints-1.9.18" level="project" />
     <orderEntry type="library" exported="" name="play-services-appstate-7.3.0" level="project" />
-    <orderEntry type="library" exported="" name="servlet-api-2.5" level="project" />
+    <orderEntry type="library" exported="" name="play-services-games-7.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-fitness-7.3.0" level="project" />
-    <orderEntry type="library" exported="" name="play-services-gcm-7.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-maps-7.3.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-gcm-7.3.0" level="project" />
     <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
-    <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.18" level="project" />
     <orderEntry type="library" exported="" name="play-services-cast-7.3.0" level="project" />
-    <orderEntry type="library" exported="" name="xpp3_min-1.1.4c" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-7.3.0" level="project" />
+    <orderEntry type="library" exported="" name="xpp3_min-1.1.4c" level="project" />
     <orderEntry type="library" exported="" name="play-services-identity-7.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-wearable-7.3.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-safetynet-7.3.0" level="project" />
@@ -140,10 +137,9 @@
     <orderEntry type="library" exported="" name="commons-io-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="xstream-1.4.7" level="project" />
     <orderEntry type="library" exported="" name="guava-17.0" level="project" />
-    <orderEntry type="library" exported="" name="appengine-endpoints-deps-1.9.18" level="project" />
     <orderEntry type="library" exported="" name="play-services-nearby-7.3.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-7.3.0" level="project" />
-    <orderEntry type="module" module-name="backend" exported="" />
+    <orderEntry type="module" module-name="shared" exported="" />
   </component>
 </module>

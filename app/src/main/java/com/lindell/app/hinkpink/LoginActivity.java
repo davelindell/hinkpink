@@ -1,7 +1,7 @@
 package com.lindell.app.hinkpink;
 
 import com.lindell.app.hinkpink.shared.ClientException;
-import com.lindell.app.hinkpink.shared.communication.ClientCommunicator;
+import com.lindell.app.hinkpink.communication.ClientCommunicator;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
 
@@ -259,7 +259,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service-- do case where user doesn't exist
-            ValidateUserParams validate_user_params = new ValidateUserParams(mEmail,mPassword);
+            ValidateUserParams validate_user_params = new ValidateUserParams();
+            validate_user_params.setEmail(mEmail);
+            validate_user_params.setPassword(mPassword);
             ValidateUserResult validate_user_result = null;
 
             try {
@@ -270,9 +272,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
 
             //HinkPinkUser fetched_user = ofy().load().type(HinkPinkUser.class).filter("email", mEmail).first().now();
-            if (validate_user_result == null)
+            if (validate_user_result.isValid() == false)
                 return false;
-            else if (validate_user_result.getUser().getPassword() != mPassword) {
+            else if (!validate_user_result.getUser().getPassword().equals(mPassword)) {
                 return false;
             }
             else {

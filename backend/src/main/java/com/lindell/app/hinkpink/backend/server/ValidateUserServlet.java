@@ -4,12 +4,8 @@ package com.lindell.app.hinkpink.backend.server;
  * Created by lindell on 6/5/15.
  */
 
-import com.googlecode.objectify.ObjectifyService;
-import static com.googlecode.objectify.ObjectifyService.ofy;
 import com.lindell.app.hinkpink.backend.server.facade.ServerFacade;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserParams;
-import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
-import com.lindell.app.hinkpink.shared.models.HinkPinkUser;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -22,14 +18,15 @@ public class ValidateUserServlet extends HttpServlet {
 
 
     public ValidateUserServlet(){
-        ObjectifyService.register(HinkPinkUser.class);
-        HinkPinkUser fetched_user = ofy().load().type(HinkPinkUser.class).filter("email", "t@t.com").first().now();
-        if (fetched_user == null) {
-            fetched_user = new HinkPinkUser();
-            fetched_user.setEmail("t@t.com");
-            fetched_user.setPassword("password");
-            ofy().save().entity(fetched_user).now();
-        }
+        // Register the HinkPinkUser class
+//        ObjectifyService.register(HinkPinkUser.class);
+//        HinkPinkUser fetched_user = ofy().load().type(HinkPinkUser.class).filter("email", "t@t.com").first().now();
+//        if (fetched_user == null) {
+//            fetched_user = new HinkPinkUser();
+//            fetched_user.setEmail("t@t.com");
+//            fetched_user.setPassword("password");
+//            ofy().save().entity(fetched_user).now();
+//        }
     }
 
     @Override

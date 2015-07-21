@@ -5,18 +5,47 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.lindell.app.hinkpink.LoginActivity">
+    tools:context="com.lindell.app.hinkpink.LoginActivity"
+    android:background="#ffadc9ff">
 
     <!-- Login progress -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></LinearLayout>
+    <TextView
+        android:layout_width="330dp"
+        android:layout_height="171dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="HinkPink"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="70dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#93000000"
+        android:textStyle="bold" />
 
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Please log in:"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold|italic"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="25dp"
+        android:textColor="#ff555555" />
+
+    <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress" android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:autoText="true"
+        android:textColorHint="#ff555555"
+        android:backgroundTint="@android:color/black"
+        android:text="d@d.com" />
 
     <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,23 +54,30 @@
         <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical">
 
-            <AutoCompleteTextView android:id="@+id/email" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress" android:maxLines="1"
-                android:singleLine="true" />
-
             <EditText android:id="@+id/password" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:hint="@string/prompt_password"
+                android:layout_height="wrap_content" android:hint="Password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified" android:inputType="textPassword"
-                android:maxLines="1" android:singleLine="true" />
+                android:maxLines="1" android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="#ff555555"
+                android:backgroundTint="@android:color/black"
+                android:text="passw" />
 
             <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" android:text="@string/action_sign_in"
+                android:layout_marginTop="16dp" android:text="@string/action_sign_in_short"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I&apos;m New!"
+                android:id="@+id/email_register_button" style="?android:textAppearanceSmall"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>

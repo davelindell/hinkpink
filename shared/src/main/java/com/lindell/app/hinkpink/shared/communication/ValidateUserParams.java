@@ -5,9 +5,6 @@ package com.lindell.app.hinkpink.shared.communication;
  */
 public class ValidateUserParams extends CommunicatorParams {
 
-    /**
-     * The constructor for the ValidateUser_Params class
-     */
     public ValidateUserParams() {
 
     }

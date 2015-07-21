@@ -4,6 +4,7 @@ import com.lindell.app.hinkpink.shared.ClientException;
 import com.lindell.app.hinkpink.communication.ClientCommunicator;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
+import com.lindell.app.hinkpink.shared.models.HinkPinkUser;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,6 +12,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +25,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -83,14 +86,29 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
         });
 
+        Button mEmailRegisterButton = (Button) findViewById(R.id.email_register_button);
+        mEmailRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                beginRegisterActivity();
+            }
+        });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
     }
 
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        return password.length() > 4;
+    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -141,15 +159,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
         }
     }
 
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
+    public void beginRegisterActivity() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+    public void beginFriendListActivity(HinkPinkUser user) {
+        Intent intent = new Intent(this, ConnectionListActivity.class);
+        // http://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents/2141166#2141166
+        intent.putExtra("email",user.getEmail());
+        intent.putExtra("password",user.getPassword());
+        startActivity(intent);
     }
 
     /**
@@ -250,15 +274,16 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         private final String mEmail;
         private final String mPassword;
+        private HinkPinkUser user;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
+            user = null;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service-- do case where user doesn't exist
             ValidateUserParams validate_user_params = new ValidateUserParams();
             validate_user_params.setEmail(mEmail);
             validate_user_params.setPassword(mPassword);
@@ -272,12 +297,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             }
 
             //HinkPinkUser fetched_user = ofy().load().type(HinkPinkUser.class).filter("email", mEmail).first().now();
-            if (validate_user_result.isValid() == false)
-                return false;
-            else if (!validate_user_result.getUser().getPassword().equals(mPassword)) {
+            if (validate_user_result.isValid() == false) {
                 return false;
             }
             else {
+                user = validate_user_result.getUser();
                 return true;
             }
         }
@@ -288,7 +312,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                finish();
+                beginFriendListActivity(user);
+//                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

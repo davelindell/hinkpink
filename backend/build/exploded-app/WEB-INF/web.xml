@@ -8,6 +8,52 @@
         <servlet-name>ValidateUserServlet</servlet-name>
         <url-pattern>/ValidateUser</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.RegisterUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterUserServlet</servlet-name>
+        <url-pattern>/RegisterUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetUserConnectionsServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.GetUserConnectionsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetUserConnectionsServlet</servlet-name>
+        <url-pattern>/GetUserConnections</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddFriendServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.AddConnectionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddFriendServlet</servlet-name>
+        <url-pattern>/AddFriend</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetConnectionGamesServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.GetConnectionGamesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetConnectionGamesServlet</servlet-name>
+        <url-pattern>/GetConnectionGames</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SubmitNewGameServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.SubmitNewGameServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmitNewGameServlet</servlet-name>
+        <url-pattern>/SubmitNewGame</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

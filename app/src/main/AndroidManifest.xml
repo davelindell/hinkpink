@@ -33,6 +33,50 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lindell.app.hinkpink.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".ConnectionListActivity"
+            android:label="@string/title_activity_friend_list" >
+        </activity>
+        <activity
+            android:name=".ConnectionDetailActivity"
+            android:label="@string/title_activity_connection_detail"
+            android:parentActivityName=".ConnectionListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lindell.app.hinkpink.ConnectionListActivity" />
+        </activity>
+        <activity
+            android:name=".AddFriendActivity"
+            android:label="@string/title_activity_add_friend"
+            android:parentActivityName=".ConnectionListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lindell.app.hinkpink.ConnectionListActivity" />
+        </activity>
+        <activity
+            android:name=".GameDetailActivity"
+            android:label="@string/title_activity_game_detail"
+            android:parentActivityName=".ConnectionDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lindell.app.hinkpink.ConnectionDetailActivity" />
+        </activity>
+        <activity
+            android:name=".NewGameActivity"
+            android:label="@string/title_activity_new_game"
+            android:parentActivityName=".ConnectionDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.lindell.app.hinkpink.ConnectionDetailActivity" />
+        </activity>
     </application>
 
 </manifest>

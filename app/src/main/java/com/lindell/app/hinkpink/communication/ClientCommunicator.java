@@ -1,6 +1,12 @@
 package com.lindell.app.hinkpink.communication;
 
 import com.lindell.app.hinkpink.shared.ClientException;
+import com.lindell.app.hinkpink.shared.communication.AddConnectionParams;
+import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesParams;
+import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesResult;
+import com.lindell.app.hinkpink.shared.communication.GetUserConnectionsResult;
+import com.lindell.app.hinkpink.shared.communication.NewGameParams;
+import com.lindell.app.hinkpink.shared.communication.RegisterUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
 import com.thoughtworks.xstream.XStream;
@@ -40,10 +46,29 @@ public class ClientCommunicator {
      * @throws ClientException
      */
 
+    public ValidateUserResult submitNewGame(NewGameParams params) throws ClientException {
+        return (ValidateUserResult)doPost("http://" + host_url + ":" + port + "/SubmitNewGame", params);
+    }
+
+    public GetConnectionGamesResult getConnectionGames(GetConnectionGamesParams params) throws ClientException {
+        return (GetConnectionGamesResult)doPost("http://" + host_url + ":" + port + "/GetConnectionGames", params);
+    }
+
+    public ValidateUserResult addFriend(AddConnectionParams params) throws ClientException {
+        return (ValidateUserResult)doPost("http://" + host_url + ":" + port + "/AddFriend", params);
+    }
+
     public ValidateUserResult validateUser(ValidateUserParams params) throws ClientException {
         return (ValidateUserResult)doPost("http://" + host_url + ":" + port + "/ValidateUser", params);
     }
 
+    public ValidateUserResult registerUser(RegisterUserParams params) throws ClientException {
+        return (ValidateUserResult)doPost("http://" + host_url + ":" + port + "/RegisterUser", params);
+    }
+
+    public GetUserConnectionsResult getUserConnections(ValidateUserParams params) throws ClientException {
+        return (GetUserConnectionsResult)doPost("http://" + host_url + ":" + port + "/GetUserConnections", params);
+    }
 
     private byte[] doGet(String urlPath) throws ClientException {
         // Make HTTP GET request to the specified URL,
@@ -106,6 +131,7 @@ public class ClientCommunicator {
                 InputStream responseBody = connection.getInputStream();
                 // Read response body from InputStream ...
                 result_obj = xml_stream.fromXML(responseBody);
+                connection.disconnect();
             }
             else {
                 // SERVER RETURNED AN HTTP ERROR
@@ -117,6 +143,7 @@ public class ClientCommunicator {
             System.out.println(e.getMessage());
             throw new ClientException();
         }
+
         return result_obj;
     }
 

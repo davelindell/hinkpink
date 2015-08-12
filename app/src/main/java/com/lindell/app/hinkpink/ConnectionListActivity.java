@@ -21,29 +21,26 @@ import com.lindell.app.hinkpink.shared.models.HinkPinkConnection;
 import com.lindell.app.hinkpink.shared.models.HinkPinkGame;
 import com.lindell.app.hinkpink.shared.models.HinkPinkUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ConnectionListActivity extends ActionBarActivity {
 
-    //todo: load the connectionlist, etc. from asynctask
-    HinkPinkUser user;
-    ClientCommunicator cc;
-    List<HinkPinkConnection> connectionList;
+    //TODO: Make room for incoming/pending lists
+    private HinkPinkUser user;
+    private ClientCommunicator cc;
+    private List<HinkPinkConnection> connectionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection_list);
         this.cc = new ClientCommunicator();
+        this.connectionList = new ArrayList<HinkPinkConnection>();
         user = new HinkPinkUser();
         user.setEmail(getIntent().getStringExtra("email"));
         user.setPassword(getIntent().getStringExtra("password"));
-
-        // populate the connectionList variable
-        ConnectionListTask connectionListTask = new ConnectionListTask();
-        connectionListTask.execute((Void) null);
-
 
         Button addFriendButton = (Button) findViewById(R.id.add_friend);
         addFriendButton.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +50,14 @@ public class ConnectionListActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // populate the connectionList variable
+        ConnectionListTask connectionListTask = new ConnectionListTask();
+        connectionListTask.execute((Void) null);
     }
 
     public class ConnectionListTask extends AsyncTask<Void, Void, Boolean> {

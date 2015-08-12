@@ -54,6 +54,11 @@
                 android:value="com.lindell.app.hinkpink.ConnectionListActivity" />
         </activity>
         <activity
+            android:name=".ConnectionPagerActivity"
+            android:label="@string/title_activity_connection_pager"
+            android:parentActivityName=".ConnectionListActivity" >
+        </activity>
+        <activity
             android:name=".AddFriendActivity"
             android:label="@string/title_activity_add_friend"
             android:parentActivityName=".ConnectionListActivity" >

@@ -12,7 +12,7 @@ import android.widget.EditText;
 import com.lindell.app.hinkpink.communication.ClientCommunicator;
 import com.lindell.app.hinkpink.shared.ClientException;
 import com.lindell.app.hinkpink.shared.communication.AddConnectionParams;
-import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
+import com.lindell.app.hinkpink.shared.communication.AddConnectionResult;
 import com.lindell.app.hinkpink.shared.models.HinkPinkConnection;
 import com.lindell.app.hinkpink.shared.models.HinkPinkUser;
 
@@ -36,6 +36,9 @@ public class AddFriendActivity extends ActionBarActivity {
         user.setEmail(getIntent().getStringExtra("email"));
         user.setPassword(getIntent().getStringExtra("password"));
 
+        friendEmail = (EditText) findViewById(R.id.friendEmail);
+        friendDisplayName = (EditText) findViewById(R.id.friendDisplayName);
+
         Button addFriendButton = (Button) findViewById(R.id.button);
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,10 +46,6 @@ public class AddFriendActivity extends ActionBarActivity {
                 AddConnectionParams params = new AddConnectionParams();
                 params.setEmail(user.getEmail());
                 params.setPassword(user.getPassword());
-
-                friendEmail = (EditText) findViewById(R.id.friendEmail);
-                friendDisplayName = (EditText) findViewById(R.id.friendDisplayName);
-
                 params.setFriendEmail(friendEmail.getText().toString());
                 params.setFriendDisplayName(friendDisplayName.getText().toString());
                 AddFriendTask addFriendTask = new AddFriendTask(params);
@@ -57,14 +56,15 @@ public class AddFriendActivity extends ActionBarActivity {
 
     public class AddFriendTask extends AsyncTask<Void, Void, Boolean> {
         AddConnectionParams params;
-
+        int err;
         AddFriendTask(AddConnectionParams params) {
+            this.err = 0;
             this.params = params;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            ValidateUserResult result = null;
+            AddConnectionResult result = null;
             try {
                 result = cc.addFriend(this.params);
             } catch (ClientException e) {
@@ -72,8 +72,15 @@ public class AddFriendActivity extends ActionBarActivity {
             }
             if (result.isValid())
                 return true;
-            else
+            else {
+                if (result.isAlreadyExists()) {
+                    err = 1;
+                } else {
+                    err = 0;
+                }
                 return false;
+            }
+
         }
 
         @Override
@@ -81,8 +88,16 @@ public class AddFriendActivity extends ActionBarActivity {
             if (success) {
                 finish();
             } else {
-                friendEmail.setError("Can't find a user with this email!");
-                friendEmail.requestFocus();
+                if (err == 0) {
+                    friendEmail.setError("Can't find a user with this email!");
+                    friendEmail.requestFocus();
+                } else if (err == 1) {
+                    friendEmail.setError("You've already added this friend!");
+                    friendEmail.requestFocus();
+                } else {
+                    friendEmail.setError("Error loading data!");
+                    friendEmail.requestFocus();
+                }
             }
         }
 

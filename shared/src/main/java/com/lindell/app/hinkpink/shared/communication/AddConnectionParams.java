@@ -10,15 +10,16 @@ public class AddConnectionParams extends CommunicatorParams {
      */
     private String friendEmail;
     private String friendDisplayName;
-    public AddConnectionParams() {
 
+    public AddConnectionParams() {
+        super();
     }
 
     public String getFriendEmail() {
         return friendEmail;
     }
 
-    public void setFriendEmail(String friend_email) {
+    public void setFriendEmail(String friendEmail) {
         this.friendEmail = friendEmail;
     }
 

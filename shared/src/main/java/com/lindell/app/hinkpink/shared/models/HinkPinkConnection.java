@@ -15,7 +15,9 @@ import java.util.List;
 public class HinkPinkConnection implements Serializable {
     @Id
     private Long id;
+    // describes id associated with email address (friend's)
     private Long playerID;
+    // friend's associated connection ID
     private Long playerConnectionID;
     private String email;
     private String displayName;

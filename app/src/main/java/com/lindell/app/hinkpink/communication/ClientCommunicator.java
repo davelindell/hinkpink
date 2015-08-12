@@ -2,6 +2,8 @@ package com.lindell.app.hinkpink.communication;
 
 import com.lindell.app.hinkpink.shared.ClientException;
 import com.lindell.app.hinkpink.shared.communication.AddConnectionParams;
+import com.lindell.app.hinkpink.shared.communication.ApproveConnectionParams;
+import com.lindell.app.hinkpink.shared.communication.ApproveConnectionResult;
 import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesParams;
 import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesResult;
 import com.lindell.app.hinkpink.shared.communication.GetUserConnectionsResult;
@@ -9,6 +11,7 @@ import com.lindell.app.hinkpink.shared.communication.NewGameParams;
 import com.lindell.app.hinkpink.shared.communication.RegisterUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
+import com.lindell.app.hinkpink.shared.communication.AddConnectionResult;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
@@ -50,12 +53,16 @@ public class ClientCommunicator {
         return (ValidateUserResult)doPost("http://" + host_url + ":" + port + "/SubmitNewGame", params);
     }
 
+    public ApproveConnectionResult approveConnection(ApproveConnectionParams params) throws ClientException {
+        return (ApproveConnectionResult)doPost("http://" + host_url + ":" + port + "/ApproveConnection", params);
+    }
+
     public GetConnectionGamesResult getConnectionGames(GetConnectionGamesParams params) throws ClientException {
         return (GetConnectionGamesResult)doPost("http://" + host_url + ":" + port + "/GetConnectionGames", params);
     }
 
-    public ValidateUserResult addFriend(AddConnectionParams params) throws ClientException {
-        return (ValidateUserResult)doPost("http://" + host_url + ":" + port + "/AddFriend", params);
+    public AddConnectionResult addFriend(AddConnectionParams params) throws ClientException {
+        return (AddConnectionResult)doPost("http://" + host_url + ":" + port + "/AddFriend", params);
     }
 
     public ValidateUserResult validateUser(ValidateUserParams params) throws ClientException {
@@ -68,6 +75,10 @@ public class ClientCommunicator {
 
     public GetUserConnectionsResult getUserConnections(ValidateUserParams params) throws ClientException {
         return (GetUserConnectionsResult)doPost("http://" + host_url + ":" + port + "/GetUserConnections", params);
+    }
+
+    public GetUserConnectionsResult getUserIncomingConnections(ValidateUserParams params) throws ClientException {
+        return (GetUserConnectionsResult)doPost("http://" + host_url + ":" + port + "/GetUserIncomingConnections", params);
     }
 
     private byte[] doGet(String urlPath) throws ClientException {

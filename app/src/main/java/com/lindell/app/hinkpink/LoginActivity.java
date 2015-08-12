@@ -169,7 +169,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     }
 
     public void beginFriendListActivity(HinkPinkUser user) {
-        Intent intent = new Intent(this, ConnectionListActivity.class);
+        Intent intent = new Intent(this, ConnectionPagerActivity.class);
         // http://stackoverflow.com/questions/2139134/how-to-send-an-object-from-one-android-activity-to-another-using-intents/2141166#2141166
         intent.putExtra("email",user.getEmail());
         intent.putExtra("password",user.getPassword());

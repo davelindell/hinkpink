@@ -28,12 +28,30 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>GetUserIncomingConnectionsServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.GetUserIncomingConnectionsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetUserIncomingConnectionsServlet</servlet-name>
+        <url-pattern>/GetUserIncomingConnections</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AddFriendServlet</servlet-name>
         <servlet-class>com.lindell.app.hinkpink.backend.server.AddConnectionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddFriendServlet</servlet-name>
         <url-pattern>/AddFriend</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ApproveConnectionServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.ApproveConnectionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ApproveConnectionServlet</servlet-name>
+        <url-pattern>/ApproveConnection</url-pattern>
     </servlet-mapping>
 
     <servlet>

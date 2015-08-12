@@ -1,6 +1,7 @@
 package com.lindell.app.hinkpink;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.internal.view.menu.ListMenuItemView;
@@ -55,7 +56,8 @@ public class ConnectionDetailActivity extends ActionBarActivity {
         TextView friendHinkPinkLabel = (TextView) findViewById(R.id.friendHinkPinkLabel);
         friendHinkPinkLabel.setText(connection.getDisplayName());
 
-        loadGames();
+        LoadGamesTask loadGamesTask = new LoadGamesTask();
+        loadGamesTask.execute((Void) null);
 
         populateView();
 
@@ -132,6 +134,25 @@ public class ConnectionDetailActivity extends ActionBarActivity {
             System.err.println("ClientException: " + e.getMessage());
         }
         return;
+    }
+
+    public class LoadGamesTask extends AsyncTask<Void, Void, Boolean> {
+        LoadGamesTask() {
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+ls
+            loadGames();
+            return true;
+        }
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            return;
+        }
+        @Override
+        protected void onCancelled() {
+            return;
+        }
     }
 
     @Override

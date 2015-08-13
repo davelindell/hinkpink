@@ -6,9 +6,13 @@ import com.lindell.app.hinkpink.shared.communication.ApproveConnectionParams;
 import com.lindell.app.hinkpink.shared.communication.ApproveConnectionResult;
 import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesParams;
 import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesResult;
+import com.lindell.app.hinkpink.shared.communication.GetGameParams;
+import com.lindell.app.hinkpink.shared.communication.GetGameResult;
 import com.lindell.app.hinkpink.shared.communication.GetUserConnectionsResult;
 import com.lindell.app.hinkpink.shared.communication.NewGameParams;
 import com.lindell.app.hinkpink.shared.communication.RegisterUserParams;
+import com.lindell.app.hinkpink.shared.communication.SubmitGameInfoParams;
+import com.lindell.app.hinkpink.shared.communication.SubmitGameInfoResult;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
 import com.lindell.app.hinkpink.shared.communication.AddConnectionResult;
@@ -49,6 +53,10 @@ public class ClientCommunicator {
      * @throws ClientException
      */
 
+    public SubmitGameInfoResult submitGameInfo(SubmitGameInfoParams params) throws ClientException {
+        return (SubmitGameInfoResult)doPost("http://" + host_url + ":" + port + "/SubmitGameInfo", params);
+    }
+
     public ValidateUserResult submitNewGame(NewGameParams params) throws ClientException {
         return (ValidateUserResult)doPost("http://" + host_url + ":" + port + "/SubmitNewGame", params);
     }
@@ -79,6 +87,9 @@ public class ClientCommunicator {
 
     public GetUserConnectionsResult getUserIncomingConnections(ValidateUserParams params) throws ClientException {
         return (GetUserConnectionsResult)doPost("http://" + host_url + ":" + port + "/GetUserIncomingConnections", params);
+    }
+    public GetGameResult getGame(GetGameParams params) throws ClientException {
+        return (GetGameResult)doPost("http://" + host_url + ":" + port + "/GetGame", params);
     }
 
     private byte[] doGet(String urlPath) throws ClientException {

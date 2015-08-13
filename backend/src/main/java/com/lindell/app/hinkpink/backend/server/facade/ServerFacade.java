@@ -10,9 +10,13 @@ import com.lindell.app.hinkpink.shared.communication.ApproveConnectionParams;
 import com.lindell.app.hinkpink.shared.communication.ApproveConnectionResult;
 import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesParams;
 import com.lindell.app.hinkpink.shared.communication.GetConnectionGamesResult;
+import com.lindell.app.hinkpink.shared.communication.GetGameParams;
+import com.lindell.app.hinkpink.shared.communication.GetGameResult;
 import com.lindell.app.hinkpink.shared.communication.GetUserConnectionsResult;
 import com.lindell.app.hinkpink.shared.communication.NewGameParams;
 import com.lindell.app.hinkpink.shared.communication.RegisterUserParams;
+import com.lindell.app.hinkpink.shared.communication.SubmitGameInfoParams;
+import com.lindell.app.hinkpink.shared.communication.SubmitGameInfoResult;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserParams;
 import com.lindell.app.hinkpink.shared.communication.ValidateUserResult;
 import com.lindell.app.hinkpink.shared.communication.AddConnectionParams;
@@ -321,6 +325,48 @@ public class ServerFacade {
             }
         }
 
+        return result;
+    }
+
+
+    public SubmitGameInfoResult submitGameInfo(SubmitGameInfoParams params) {
+        HinkPinkUser fetched_user = OfyService.ofy().load().type(HinkPinkUser.class).filter("email", params.getEmail()).first().now();
+        SubmitGameInfoResult result = new SubmitGameInfoResult();
+        result.setReceived(false);
+
+        if (fetched_user != null) {
+            if (fetched_user.getPassword().equals(params.getPassword())) {
+                //fetch the games
+                HinkPinkGame game = OfyService.ofy().load().type(HinkPinkGame.class).id(params.getGameID()).now();
+
+                // add in info
+                if (params.isGuess()) {
+                    game.getGuesses().add(params.getInformation());
+                } else {
+                    game.getExtraHints().add(params.getInformation());
+                }
+
+                // save game and get key
+                Key<HinkPinkGame> key = OfyService.ofy().save().entity(game).now();
+
+                result.setReceived(true);
+            }
+        }
+
+        return result;
+    }
+
+    public GetGameResult getGame(GetGameParams params) {
+        HinkPinkUser fetched_user = OfyService.ofy().load().type(HinkPinkUser.class).filter("email", params.getEmail()).first().now();
+        GetGameResult result = new GetGameResult();
+
+        if (fetched_user != null) {
+            if (fetched_user.getPassword().equals(params.getPassword())) {
+                //fetch the games
+                HinkPinkGame game = OfyService.ofy().load().type(HinkPinkGame.class).id(params.getGameID()).now();
+                result.setGame(game);
+            }
+        }
         return result;
     }
 

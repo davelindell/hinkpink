@@ -72,6 +72,24 @@
         <url-pattern>/SubmitNewGame</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SubmitGameInfoServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.SubmitGameInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmitGameInfoServlet</servlet-name>
+        <url-pattern>/SubmitGameInfo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetGameServlet</servlet-name>
+        <servlet-class>com.lindell.app.hinkpink.backend.server.GetGameServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetGameServlet</servlet-name>
+        <url-pattern>/GetGame</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

@@ -24,37 +24,72 @@ android:orientation="vertical">
         android:layout_gravity="center_horizontal"
         android:text="Hint" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollViewHints"
-        android:layout_weight="0.88"
-        android:fillViewport="false" >
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listViewHints" />
-    </ScrollView>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="143dp"
-        android:id="@+id/scrollViewGuesses"
-        android:fillViewport="false" >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/hintsLayout"
+            android:layout_height="wrap_content">
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listViewGuesses" />
-    </ScrollView>
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="133dp"
+                android:id="@+id/listViewHints" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Guesses"
+                android:id="@+id/textView8"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/guessLayout"
+            android:layout_height="wrap_content">
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="142dp"
+                android:id="@+id/listViewGuesses" />
+        </LinearLayout>
 
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="113dp"
-        android:rowCount="1"
-        android:columnCount="3"
+        android:rowCount="7"
+        android:columnCount="14"
         android:orientation="horizontal"
-        android:id="@+id/gameGridLayout"></GridLayout>
+        android:id="@+id/gameGridLayout">
+
+        <EditText
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:layout_row="1"
+            android:layout_column="0" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="Submit"
+            android:id="@+id/submitButton"
+            android:layout_row="2"
+            android:layout_column="0" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="Refresh"
+            android:id="@+id/refreshButton"
+            android:layout_row="6"
+            android:layout_column="0" />
+    </GridLayout>
 
 </LinearLayout>

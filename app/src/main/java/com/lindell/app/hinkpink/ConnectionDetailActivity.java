@@ -25,8 +25,12 @@ import com.lindell.app.hinkpink.shared.models.HinkPinkConnection;
 import com.lindell.app.hinkpink.shared.models.HinkPinkGame;
 
 import java.io.ObjectInputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 public class ConnectionDetailActivity extends ActionBarActivity {
@@ -38,6 +42,8 @@ public class ConnectionDetailActivity extends ActionBarActivity {
 
     private List<String> myHints;
     private List<String> friendHints;
+    private ArrayAdapter myHintsAdapter;
+    private ArrayAdapter friendHintsAdapter;
 
     private List<HinkPinkGame> gameList;
 
@@ -49,20 +55,19 @@ public class ConnectionDetailActivity extends ActionBarActivity {
         myHints = new ArrayList<String>();
         friendHints = new ArrayList<String>();
 
+
+        cc = new ClientCommunicator();
+
+        this.gameList = new ArrayList<HinkPinkGame>();
         this.connection = (HinkPinkConnection) getIntent().getSerializableExtra("connection");
         this.email = getIntent().getStringExtra("email");
         this.password = getIntent().getStringExtra("password");
 
         TextView friendHinkPinkLabel = (TextView) findViewById(R.id.friendHinkPinkLabel);
-        friendHinkPinkLabel.setText(connection.getDisplayName());
+        friendHinkPinkLabel.setText("From " + connection.getDisplayName());
 
-        LoadGamesTask loadGamesTask = new LoadGamesTask();
-        loadGamesTask.execute((Void) null);
-
-        populateView();
-
-        ArrayAdapter myHintsAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_connection_detail, myHints);
-        ArrayAdapter friendHintsAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_connection_detail, friendHints);
+        myHintsAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.textview_incoming_connection, myHints);
+        friendHintsAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.textview_incoming_connection, friendHints);
 
         // Here, you set the data in your ListView
         ListView myHintsList = (ListView) findViewById(R.id.listView1);
@@ -94,6 +99,41 @@ public class ConnectionDetailActivity extends ActionBarActivity {
             }
         });
 
+        LoadGamesTask loadGamesTask = new LoadGamesTask();
+        loadGamesTask.execute((Void) null);
+
+        try {
+            loadGamesTask.get(1000, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException e) {
+            System.out.println(e.getMessage());
+        } catch (ExecutionException e) {
+            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+
+        populateView();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoadGamesTask loadGamesTask = new LoadGamesTask();
+        loadGamesTask.execute((Void) null);
+
+        try {
+            loadGamesTask.get(1000, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException e) {
+            System.out.println(e.getMessage());
+        } catch (ExecutionException e) {
+            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+
+        populateView();
     }
 
     void beginNewGameActivity(HinkPinkConnection connection) {
@@ -108,18 +148,27 @@ public class ConnectionDetailActivity extends ActionBarActivity {
         Intent intent = new Intent(this, GameDetailActivity.class);
         intent.putExtra("game",game);
         intent.putExtra("email",email);
+        intent.putExtra("password",password);
+        intent.putExtra("connection",connection);
         startActivity(intent);
     }
 
     void populateView() {
-        for (HinkPinkGame g : gameList) {
-            // check if game hint was given by connection or not
-            if (g.getHintPlayerID().equals(connection.getPlayerID())) {
-                friendHints.add(g.getHint());
-            } else {
-                myHints.add(g.getHint());
+        friendHints.clear();
+        myHints.clear();
+
+        if (!gameList.isEmpty()) {
+            for (HinkPinkGame g : gameList) {
+                // check if game hint was given by connection or not
+                if (g.getHintPlayerID().equals(connection.getPlayerID())) {
+                    friendHints.add(g.getHint());
+                } else {
+                    myHints.add(g.getHint());
+                }
             }
         }
+        friendHintsAdapter.notifyDataSetChanged();
+        myHintsAdapter.notifyDataSetChanged();
     }
 
     void loadGames() {
@@ -141,7 +190,6 @@ public class ConnectionDetailActivity extends ActionBarActivity {
         }
         @Override
         protected Boolean doInBackground(Void... params) {
-ls
             loadGames();
             return true;
         }

@@ -15,7 +15,9 @@ import com.lindell.app.hinkpink.shared.models.HinkPinkGame;
 public class GameDetailActivity extends ActionBarActivity {
 
     HinkPinkGame game;
+    HinkPinkConnection connection;
     String email;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +26,11 @@ public class GameDetailActivity extends ActionBarActivity {
 
         this.game = (HinkPinkGame) getIntent().getSerializableExtra("game");
         this.email = (String) getIntent().getStringExtra("email");
+        this.password = (String) getIntent().getStringExtra("password");
+        this.connection = (HinkPinkConnection) getIntent().getSerializableExtra("connection");
 
-        ArrayAdapter hintsAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_game_detail, game.getExtraHints());
-        ArrayAdapter guessesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_game_detail, game.getGuesses());
+        ArrayAdapter hintsAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.textview_incoming_connection, game.getExtraHints());
+        ArrayAdapter guessesAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.textview_incoming_connection, game.getGuesses());
 
         // Here, you set the data in your ListView
         ListView listViewHints = (ListView) findViewById(R.id.listViewHints);
@@ -35,7 +39,15 @@ public class GameDetailActivity extends ActionBarActivity {
         listViewHints.setAdapter(hintsAdapter);
         listViewGuesses.setAdapter(guessesAdapter);
 
-        //TODO: check if current user is guesser or hinter
+        Long connectionID = connection.getPlayerID();
+        if (connectionID.equals(game.getGuessPlayerID())) { // current player provided the hint
+            
+
+        } else { // opposing player provided the hint
+
+
+
+        }
         //TODO: add buttons to guess or provide additional hints
         // TODO: add servlets to handle guess/extraHint inputs
 

@@ -31,10 +31,10 @@ public class ClientCommunicator {
     private String port;
 
     public ClientCommunicator() {
-//        this.host_url = "neon-idiom-635.appspot.com";
-//        this.port = "80";
-        this.host_url = "10.0.2.2";
-        this.port = "8080";
+        this.host_url = "neon-idiom-635.appspot.com";
+        this.port = "80";
+//        this.host_url = "10.0.2.2";
+//        this.port = "8080";
     }
 
     /**

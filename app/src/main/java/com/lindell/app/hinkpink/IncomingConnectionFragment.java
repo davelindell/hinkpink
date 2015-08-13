@@ -134,9 +134,7 @@ public class IncomingConnectionFragment extends Fragment {
 
         connectionListAdapter.notifyDataSetChanged();
 
-        for (HinkPinkConnection c : connectionList) {
-            displayNameList.add(c.getDisplayName());
-        }
+
         return view;
     }
 

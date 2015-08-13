@@ -1,5 +1,6 @@
 package com.lindell.app.hinkpink;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +14,10 @@ import com.lindell.app.hinkpink.communication.ClientCommunicator;
 import com.lindell.app.hinkpink.shared.ClientException;
 import com.lindell.app.hinkpink.shared.communication.NewGameParams;
 import com.lindell.app.hinkpink.shared.models.HinkPinkConnection;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static com.lindell.app.hinkpink.R.string.error_field_required;
 
@@ -42,10 +47,10 @@ public class NewGameActivity extends ActionBarActivity {
         buttonSubmit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                boolean checkedButton =  buttonOne.isChecked() && buttonTwo.isChecked() && buttonThree.isChecked();
+                boolean checkedButton =  buttonOne.isChecked() || buttonTwo.isChecked() || buttonThree.isChecked();
                 EditText editTextHint = (EditText) findViewById(R.id.editTextHint);
-                boolean providedHint = editTextHint.getText().toString().isEmpty();
-                if (!checkedButton || !providedHint) {
+                boolean hintEmpty = editTextHint.getText().toString().isEmpty();
+                if (!checkedButton || hintEmpty) {
                     editTextHint.setError(getString(error_field_required));
                     editTextHint.requestFocus();
                 } else {
@@ -67,11 +72,21 @@ public class NewGameActivity extends ActionBarActivity {
                     params.setPlayerConnectionID(connection.getPlayerConnectionID());
                     params.setConnectionID(connection.getId());
 
+                    SubmitNewGameTask submitNewGameTask = new SubmitNewGameTask(params);
+                    submitNewGameTask.execute((Void) null);
+
                     try {
-                        cc.submitNewGame(params);
-                    } catch (ClientException e) {
+                        submitNewGameTask.get(1000, TimeUnit.MILLISECONDS);
+                    } catch (TimeoutException e) {
+                        System.out.println(e.getMessage());
+                    } catch (ExecutionException e) {
+                        System.out.println(e.getMessage());
+                    } catch (InterruptedException e) {
                         System.out.println(e.getMessage());
                     }
+
+                    finish();
+
                 }
             }
         });
@@ -102,6 +117,32 @@ public class NewGameActivity extends ActionBarActivity {
                 buttonThree.setChecked(true);
             }
         });
+    }
+
+    public class SubmitNewGameTask extends AsyncTask<Void, Void, Boolean> {
+        NewGameParams params;
+
+        SubmitNewGameTask(NewGameParams params) {
+            this.params = params;
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                cc.submitNewGame(this.params);
+            } catch (ClientException e) {
+                System.out.println(e.getMessage());
+                return false;
+            }
+            return true;
+        }
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            return;
+        }
+        @Override
+        protected void onCancelled() {
+            return;
+        }
     }
 
     @Override
